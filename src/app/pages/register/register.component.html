@@ -1,0 +1,130 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 col-sm-12 col-lg-5 my-auto">
+            <div class="card border-primary">
+                <!-- <div class="card-header"> -->
+                <h3 class="p-4">Register</h3>
+                <!-- </div> -->
+                <div class="card-body">
+                    <form [formGroup]="RegisterForm">
+                        <div class="form-group mb-3">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="Nombre"
+                                formControlName="name"
+                                autocomplete="off"
+                                [ngClass]="{ 'is-invalid' : RegisterForm.get('name').invalid && RegisterForm.get('name').touched }"
+                                [ngClass]="{ 'is-valid' : RegisterForm.get('name').valid && RegisterForm.get('name').dirty }"
+                            />
+                            <div class="invalid-feedback" *ngIf="RegisterForm.get('name').errors?.required">
+                                {{RegisterForm.get('name')?.hasError('required') ? 'El campo esta vacío' : ''}}
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="Apellido"
+                                formControlName="lastname"
+                                autocomplete="off"
+                                [ngClass]="{ 'is-invalid' : RegisterForm.get('lastname').invalid && RegisterForm.get('lastname').touched }"
+                                [ngClass]="{ 'is-valid' : RegisterForm.get('lastname').valid && RegisterForm.get('lastname').dirty }"
+                            />
+                            <div class="invalid-feedback" *ngIf="RegisterForm.get('lastname').errors?.required">
+                                {{RegisterForm.get('lastname')?.hasError('required') ? 'El campo esta vacío' : ''}}
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <select
+                                class="form-control"
+                                formControlName="doc_type" 
+                                [ngClass]="{'is-invalid': RegisterForm.get('doc_type').touched && RegisterForm.get('doc_type').invalid }"
+                                [ngClass]="{'is-valid': RegisterForm.get('doc_type').touched && RegisterForm.get('doc_type').valid }"
+                            >
+                                <option *ngFor="let item of doc_type_array">{{item}}</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                {{
+                                    RegisterForm.get("doc_type").hasError("required")
+                                    ? "Selecciona una opcion"
+                                    : ""
+                                }}
+                              </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="No. Documento"
+                                formControlName="doc_number"
+                                onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                                autocomplete="off"
+                                [maxlength]="RegisterForm.get('doc_type').value == 'DNI' ? '7' : '8'"
+                                [ngClass]="{ 'is-invalid' : RegisterForm.get('doc_number').invalid && RegisterForm.get('doc_number').touched }"
+                                [ngClass]="{ 'is-valid' : RegisterForm.get('doc_number').valid && RegisterForm.get('doc_number').dirty }"
+                            />
+                            <div class="invalid-feedback" *ngIf="RegisterForm.get('doc_number').errors?.required">
+                                {{RegisterForm.get('doc_number')?.hasError('required') ? 'El campo esta vacío' : ''}}
+                            </div>
+                            <div class="invalid-feedback" *ngIf="RegisterForm.get('doc_number').errors?.minlength">
+                                {{RegisterForm.get('doc_number')?.hasError('minlength') ? 'El campo necesita 7 digitos' : ''}}
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <input 
+                            type="email" 
+                            class="form-control"
+                            placeholder="Email"
+                            autocomplete="off"
+                            formControlName="email"
+                            [ngClass]="{ 'is-invalid' : RegisterForm.get('email').invalid && RegisterForm.get('email').touched }"
+                            [ngClass]="{ 'is-valid' : RegisterForm.get('email').valid && RegisterForm.get('email').dirty }"
+                            />
+                            <div class="invalid-feedback" *ngIf="RegisterForm.get('email').errors?.required">
+                                {{RegisterForm.get('email')?.hasError('required') ? 'El campo esta vacío' : ''}}
+                            </div>
+                            <div class="invalid-feedback" *ngIf="RegisterForm.get('email').errors?.email">
+                                {{RegisterForm.get('email')?.hasError('email') ? 'El email es incorrecto' : ''}}
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <div class="input-group">
+                                <input 
+                                [type]="fieldTextType ? 'text' : 'password'" 
+                                class="form-control"
+                                placeholder="Contraseña"
+                                autocomplete="off"
+                                formControlName="password"
+                                [ngClass]="{ 'is-invalid' : RegisterForm.get('password').invalid && RegisterForm.get('password').touched }"
+                                [ngClass]="{ 'is-valid' : RegisterForm.get('password').valid && RegisterForm.get('password').dirty }"
+                                />
+                                <span 
+                                type="button" 
+                                class="input-group-text"
+                                    (click)="toggleFieldTextType()">
+                                    <fa-icon [icon]="fieldTextType ? faEyeSlash : faEye"></fa-icon>
+                                </span>
+                                <div class="invalid-feedback" *ngIf="RegisterForm.get('password').errors?.required">
+                                    {{RegisterForm.get('password')?.hasError('required') ? 'El campo esta vacío' : ''}}
+                                </div>
+                            </div>
+                            
+                            <div class="invalid-feedback">Llena este campo</div>
+                        </div>
+                        <div class="form-group d-grid gap-1">
+                            <button 
+                            type="button" 
+                            class="btn btn-primary"
+                            [disabled]="!RegisterForm.valid"
+                            (click)="onSubmit()"
+                            >
+                                Iniciar Sesion
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
